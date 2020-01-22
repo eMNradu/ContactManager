@@ -75,22 +75,25 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	public List<Contact> list() {
+	public List<Contact> list(){
 		String sql = "Select * FROM Contact";
-		
+
 		RowMapper<Contact> rowMapper = new RowMapper<Contact>() {
 
 			@Override
 			public Contact mapRow(ResultSet rs, int rowNum) throws SQLException {
-				// TODO Auto-generated method stub
-				return null;
-			}
+				Integer id = rs.getInt("contact_id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+				String phone = rs.getString("phone");
 
-			
-			
-		} ;
-		jdbcTemplate.query(sql,rowMapper);
-		return null;
+				return new Contact(id, name, email, address, phone);
+			}
+		};
+
+		return jdbcTemplate.query(sql, rowMapper);
+
 	}
 
 }

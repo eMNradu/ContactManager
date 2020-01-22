@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -21,6 +23,7 @@ class ContactDAOTest {
 	private ContactDAOImpl dao;
 	
 	//dataSource is reusable so it is better to have it initialize before each class is executed
+	//data source object contains information about DB connection
 	@BeforeEach
 	void setupBeforeEach() {
 		dataSource = new DriverManagerDataSource();
@@ -46,7 +49,7 @@ class ContactDAOTest {
 		 int result = dao.update(contact);
 		
 		 assertTrue(result > 0);
-	} */
+	} 
 
 	@Test
 	void testGet() {
@@ -60,23 +63,22 @@ class ContactDAOTest {
 	}
   
 	@Test
-	void testDelete() {
-		
+	void testDelete() {		
 		Integer id = 5;
-		int result = 0;
-		Contact contact = dao.get(id);
-		if(contact != null) {
-			System.out.println(contact.toString());
-			 result = dao.delete(id);
-		}
-		
+		int result = dao.delete(id);			
 		assertTrue(result > 0);
-	} 
-/*
+	}  */
+
 	@Test
 	void testList() {
-		fail("Not yet implemented");
+		List<Contact> listContacts = dao.list();
+		
+		for(Contact contact : listContacts) {
+			System.out.println(contact.toString());
+		}
+		
+		assertTrue(!listContacts.isEmpty());
 	}
-	*/
+	
 
 }
